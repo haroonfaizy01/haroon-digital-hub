@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Haroon Digital Hub - Professional Portfolio</title>
+  <!-- Fixed Favicon Link -->
+  <link rel="icon" type="image/png" href="https://img.icons8.com/color/48/source-code.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --bg-dark: #090d16;
+      --card-bg: #111827;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent: #10b981;
+      --border-color: #1e293b;
+      --star-color: #f59e0b;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body { background-color: var(--bg-dark); color: var(--text-main); line-height: 1.6; text-align: left; }
+    a { color: inherit; text-decoration: none; }
+    
+    header { background: rgba(9, 13, 22, 0.95); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border-color); }
+    .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; }
+    .logo { font-size: 1.5rem; font-weight: bold; color: var(--primary); display: flex; align-items: center; gap: 0.5rem; }
+    .logo i { color: var(--primary); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a:hover { color: var(--primary); transition: 0.3s; }
+    
+    .hero { max-width: 1200px; margin: 0 auto; padding: 6rem 2rem; text-align: center; }
+    .hero-badge { display: inline-block; padding: 0.4rem 1rem; background: rgba(37, 99, 235, 0.1); border: 1px solid var(--primary); color: var(--primary); border-radius: 50px; font-size: 0.9rem; margin-bottom: 1.5rem; }
+    .hero h1 { font-size: 3.2rem; margin-bottom: 1rem; font-weight: 800; }
+    .hero p { font-size: 1.25rem; color: var(--text-muted); max-width: 750px; margin: 0 auto 2.5rem; }
+    .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.8rem 1.8rem; background: var(--primary); color: white; border-radius: 8px; font-weight: 600; transition: 0.3s; border: none; cursor: pointer; }
+    .btn:hover { background: var(--primary-hover); transform: translateY(-2px); }
+    .btn-outline { background: transparent; border: 2px solid var(--primary); margin-left: 1rem; }
+
+    section { max-width: 1200px; margin: 0 auto; padding: 4.5rem 2rem; }
+    .section-title { text-align: center; font-size: 2.2rem; margin-bottom: 0.5rem; }
+    .section-title::after { content: ''; display: block; width: 60px; height: 4px; background: var(--primary); margin: 0.5rem auto 0; border-radius: 2px; }
+    .section-subtitle { text-align: center; color: var(--text-muted); margin-bottom: 3rem; }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; }
+    .card { background: var(--card-bg); border-radius: 12px; padding: 2.5rem 2rem; border: 1px solid var(--border-color); transition: transform 0.3s, border-color 0.3s; display: flex; flex-direction: column; justify-content: space-between; }
+    .card:hover { transform: translateY(-5px); border-color: var(--primary); }
+
+    .about-container { display: grid; grid-template-columns: 350px 1fr; gap: 3.5rem; align-items: center; }
+    .profile-img-wrap { position: relative; border-radius: 16px; overflow: hidden; border: 2px solid var(--primary); background: var(--card-bg); min-height: 350px; }
+    .profile-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    
+    .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2rem; }
+    .stat-card { background: var(--card-bg); padding: 1.5rem; border-radius: 10px; border: 1px solid var(--border-color); text-align: center; }
+    .stat-card h3 { font-size: 2.2rem; color: var(--accent); }
+
+    .enroll-btn { margin-top: 1.5rem; width: 100%; justify-content: center; background: var(--accent); }
+    .enroll-btn:hover { background: #059669; }
+
+    .project-card-interactive { cursor: pointer; position: relative; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; }
+    .project-thumb-preview { width: 100%; height: 230px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem; border: 1px solid var(--border-color); background: #000; display: block; }
+    .project-card-interactive:hover .view-btn { background: var(--primary-hover); color: white; }
+    .project-tag { display: inline-block; padding: 0.2rem 0.6rem; background: rgba(37, 99, 235, 0.15); color: var(--primary); border-radius: 4px; font-size: 0.8rem; font-weight: 600; width: fit-content; margin-bottom: 0.8rem; }
+    .project-meta { margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; color: var(--text-muted); }
+    .view-btn { padding: 0.4rem 0.8rem; background: rgba(37, 99, 235, 0.1); color: var(--primary); border-radius: 6px; font-size: 0.85rem; font-weight: 600; transition: 0.3s; }
+
+    .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(6px); z-index: 1000; justify-content: center; align-items: center; padding: 2rem; }
+    .modal-content { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; max-width: 950px; width: 100%; max-height: 90vh; overflow-y: auto; padding: 2.5rem; position: relative; }
+    .modal-close { position: absolute; top: 1.5rem; right: 1.5rem; font-size: 1.5rem; cursor: pointer; color: var(--text-muted); transition: 0.3s; }
+    .modal-close:hover { color: white; }
+    
+    .demo-screen-box { width: 100%; height: 420px; background: #000; border-radius: 10px; border: 1px solid var(--border-color); margin: 1.5rem 0; overflow: hidden; position: relative; }
+    .demo-screen-box img { width: 100%; height: 100%; object-fit: contain; background: #0a0e17; }
+    .demo-bar { background: #1e293b; padding: 0.5rem 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: var(--text-muted); }
+    .demo-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+    
+    .modal-rating-box { display: flex; align-items: center; gap: 1rem; margin: 1rem 0; padding: 1rem; background: #090d16; border-radius: 8px; border: 1px solid var(--border-color); }
+    .client-reviews-container { display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem; }
+    .client-review-item { background: #090d16; padding: 1.2rem; border-radius: 10px; border: 1px solid var(--border-color); }
+    .client-profile { display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem; }
+    .avatar-circle { width: 45px; height: 45px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; border: 1px solid var(--accent); }
+
+    .contact-card { background: var(--card-bg); padding: 3rem; border-radius: 12px; border: 1px solid var(--border-color); }
+    .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2rem; margin-top: 1.5rem; }
+    .contact-item { display: flex; align-items: center; gap: 1rem; font-size: 1.1rem; }
+    .contact-item i { font-size: 1.5rem; color: var(--primary); }
+
+    footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border-color); color: var(--text-muted); }
+    
+    @media (max-width: 900px) {
+      .about-container { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+      .profile-img-wrap { max-width: 300px; width: 100%; }
+      .hero h1 { font-size: 2.2rem; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <nav class="nav-container">
+      <div class="logo"><i class="fas fa-cubes"></i> Haroon Digital Hub</div>
+      <ul class="nav-links">
+        <li><a href="#about">About Me</a></li>
+        <li><a href="#services">Our Services</a></li>
+        <li><a href="#training">Training</a></li>
+        <li><a href="#work">Our Work</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-badge">Established in 2022 | Haroon Digital Hub</div>
+    <h1>Haroon Digital Hub</h1>
+    <p>Senior IT Specialist, Full-Stack Developer & Technical Instructor active since 2022, delivering software & digital business solutions globally.</p>
+    <div>
+      <a href="https://wa.me/93783885025" target="_blank" class="btn"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</a>
+      <a href="https://t.me/+c8pbNSimCdBlNDU1" target="_blank" class="btn btn-outline"><i class="fab fa-telegram-plane"></i> Join Telegram Channel</a>
+    </div>
+  </section>
+
+  <!-- About Me -->
+  <section id="about">
+    <h2 class="section-title">About Me</h2>
+    <p class="section-subtitle">Delivering High-Quality Technical Solutions & Mentorship Since 2022</p>
+    <div class="about-container">
+      <div class="profile-img-wrap">
+        <img src="profile.jpeg" id="mainProfilePic" alt="Haroon Faizy - IT Specialist & Trading Mentor" onerror="this.onerror=null; this.src='profile.jpg';">
+      </div>
+      <div>
+        <h3>Hello, I'm Haroon Faizy</h3>
+        <p style="margin-top: 1rem; color: var(--text-muted);">
+          Founder of <strong>Haroon Digital Hub</strong> (Est. 2022). Operating as a professional Full-Stack Developer, AI Integrator, and IT Specialist delivering enterprise web applications and custom software architectures.
+        </p>
+        <p style="margin-top: 1rem; color: var(--text-muted);">
+          As an instructor at <strong>KARA.FCS</strong>, I mentor students in 9 specialized tech & business courses. To date, I have trained over <strong>100+ students</strong>.
+        </p>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <h3>2022</h3>
+            <p>Year Established</p>
+          </div>
+          <div class="stat-card">
+            <h3>100+</h3>
+            <p>Students Mentored</p>
+          </div>
+          <div class="stat-card">
+            <h3>90%+</h3>
+            <p>Satisfaction Rate</p>
+          </div>
+          <div class="stat-card">
+            <h3>24/7</h3>
+            <p>Technical Support</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Our Services -->
+  <section id="services">
+    <h2 class="section-title">Our Services</h2>
+    <p class="section-subtitle">Comprehensive Corporate, Payment & Technology Solutions</p>
+    <div class="grid">
+      <div class="card">
+        <div>
+          <i class="fas fa-laptop-code fa-2x" style="color:var(--primary); margin-bottom:1.5rem;"></i>
+          <h3>IT Services</h3>
+          <p style="color:var(--text-muted); margin-top:0.5rem;">Full-stack web & software development, AI models integration, system optimization, and technical security audits.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div>
+          <i class="fas fa-credit-card fa-2x" style="color:var(--primary); margin-bottom:1.5rem;"></i>
+          <h3>Payment Services</h3>
+          <p style="color:var(--text-muted); margin-top:0.5rem;">International merchant payment gateways setup, international bank account integration, and e-commerce transactions setup.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div>
+          <i class="fas fa-building fa-2x" style="color:var(--primary); margin-bottom:1.5rem;"></i>
+          <h3>LLC Registration</h3>
+          <p style="color:var(--text-muted); margin-top:0.5rem;">Complete legal US & international LLC company formation, EIN tax ID acquisition, and business address setup.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div>
+          <i class="fas fa-search-location fa-2x" style="color:var(--primary); margin-bottom:1.5rem;"></i>
+          <h3>Patent Research</h3>
+          <p style="color:var(--text-muted); margin-top:0.5rem;">Comprehensive patent databases research, prior art search, and IP analysis for new products & technological inventions.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div>
+          <i class="fas fa-trademark fa-2x" style="color:var(--primary); margin-bottom:1.5rem;"></i>
+          <h3>Trademark Registration</h3>
+          <p style="color:var(--text-muted); margin-top:0.5rem;">Brand name, logo & trademark protection filing to secure exclusive legal rights for your business identity globally.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div>
+          <i class="fas fa-bullhorn fa-2x" style="color:var(--primary); margin-bottom:1.5rem;"></i>
+          <h3>Marketing Services</h3>
+          <p style="color:var(--text-muted); margin-top:0.5rem;">Digital marketing strategies, targeted PPC ad campaign management, SEO optimization, and brand growth funnels.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Training Courses -->
+  <section id="training">
+    <h2 class="section-title">Digital Business & IT Training Courses</h2>
+    <p class="section-subtitle">Instructor at KARA.FCS | Mentored 100+ Students in 9 High-Demand Fields</p>
+    <div class="grid">
+      <div class="card">
+        <div>
+          <i class="fas fa-globe fa-2x" style="color:var(--accent); margin-bottom:1.2rem;"></i>
+          <h3>1. Freelancing & Remote Work</h3>
+          <p style="color:var(--text-muted); margin-top:0.5rem;">Building high-converting international profiles, securing global clients, and earning USD online through top platforms.</p>
+        </div>
+        <a href="https://wa.me/93783885025?text=Hello%20Haroon,%20I%20want%20to%20enroll%20in%20the%20Freelancing%20Course." target="_blank" class="btn enroll-btn"><i class="fas fa-user-plus"></i> Enroll Now</a>
+      </div>
+      <div class="card">
+        <div>
+          <i class="fas fa-chart-line fa-2x" style="color:var(--accent); margin-bottom:1.2rem;"></i>
+          <h3>2. Trading & Chart Analysis</h3>
+          <p style="color:var(--text-muted); margin-top:0.5rem;">Technical market analysis, candlestick charting patterns, risk management strategies, and live signal execution.</p>
+        </div>
+        <a href="https://wa.me/93783885025?text=Hello%20Haroon,%20I%20want%20to%20enroll%20in%20the%20Trading%20Course." target="_blank" class="btn enroll-btn"><i class="fas fa-user-plus"></i> Enroll Now</a>
+      </div>
+      <div class="card">
+        <div>
+          <i class="fas fa-truck-loading fa-2x" style="color:var(--accent); margin-bottom:1.2rem;"></i>
+          <h3>3. Dropshipping & Global E-Commerce</h3>
+          <p style="color:var(--text-muted); margin-top:0.5rem;">Building automated Shopify stores, finding trending global products, and managing fulfillment seamlessly.</p>
+        </div>
+        <a href="https://wa.me/93783885025?text=Hello%20Haroon,%20I%20want%20to%20enroll%20in%20the%20Dropshipping%20Course." target="_blank" class="btn enroll-btn"><i class="fas fa-user-plus"></i> Enroll Now</a>
+      </div>
+      <div class="card">
+        <div>
+          <i class="fas fa-bullhorn fa-2x" style="color:var(--accent); margin-bottom:1.2rem;"></i>
+          <h3>4. Affiliate Marketing & Passive Income</h3>
+          <p style="color:var(--text-muted); margin-top:0.5rem;">Promoting international products, building referral funnels, and creating automated passive income streams.</p>
+        </div>
+        <a href="https://wa.me/93783885025?text=Hello%20Haroon,%20I%20want%20to%20enroll%20in%20the%20Affiliate%20Marketing%20Course." target="_blank" class="btn enroll-btn"><i class="fas fa-user-plus"></i> Enroll Now</a>
+      </div>
+      <div class="card">
+        <div>
+          <i class="fab fa-amazon fa-2x" style="color:var(--accent); margin-bottom:1.2rem;"></i>
+          <h3>5. Amazon Business & Sourcing</h3>
+          <p style="color:var(--text-muted); margin-top:0.5rem;">FBA/FBM store setup, winning buy-box strategies, supplier negotiations, and Amazon product sourcing.</p>
+        </div>
+        <a href="https://wa.me/93783885025?text=Hello%20Haroon,%20I%20want%20to%20enroll%20in%20the%20Amazon%20Course." target="_blank" class="btn enroll-btn"><i class="fas fa-user-plus"></i> Enroll Now</a>
+      </div>
+      <div class="card">
+        <div>
+          <i class="fas fa-code fa-2x" style="color:var(--accent); margin-bottom:1.2rem;"></i>
+          <h3>6. Web Development</h3>
+          <p style="color:var(--text-muted); margin-top:0.5rem;">HTML5, CSS3, JavaScript, modern frameworks, and building responsive full-stack web applications.</p>
+        </div>
+        <a href="https://wa.me/93783885025?text=Hello%20Haroon,%20I%20want%20to%20enroll%20in%20the%20Web%20Development%20Course." target="_blank" class="btn enroll-btn"><i class="fas fa-user-plus"></i> Enroll Now</a>
+      </div>
+      <div class="card">
+        <div>
+          <i class="fas fa-cogs fa-2x" style="color:var(--accent); margin-bottom:1.2rem;"></i>
+          <h3>7. Software Engineering</h3>
+          <p style="color:var(--text-muted); margin-top:0.5rem;">Software architecture patterns, algorithm design, clean code principles, and database management systems.</p>
+        </div>
+        <a href="https://wa.me/93783885025?text=Hello%20Haroon,%20I%20want%20to%20enroll%20in%20the%20Software%20Engineering%20Course." target="_blank" class="btn enroll-btn"><i class="fas fa-user-plus"></i> Enroll Now</a>
+      </div>
+      <div class="card">
+        <div>
+          <i class="fas fa-network-wired fa-2x" style="color:var(--accent); margin-bottom:1.2rem;"></i>
+          <h3>8. Networking</h3>
+          <p style="color:var(--text-muted); margin-top:0.5rem;">Network fundamentals, routing & switching protocols, IP addressing, subnets, and network security setup.</p>
+        </div>
+        <a href="https://wa.me/93783885025?text=Hello%20Haroon,%20I%20want%20to%20enroll%20in%20the%20Networking%20Course." target="_blank" class="btn enroll-btn"><i class="fas fa-user-plus"></i> Enroll Now</a>
+      </div>
+      <div class="card">
+        <div>
+          <i class="fas fa-server fa-2x" style="color:var(--accent); margin-bottom:1.2rem;"></i>
+          <h3>9. System Administration</h3>
+          <p style="color:var(--text-muted); margin-top:0.5rem;">Linux/Windows server deployment, cloud infrastructure management, server security, and system maintenance.</p>
+        </div>
+        <a href="https://wa.me/93783885025?text=Hello%20Haroon,%20I%20want%20to%20enroll%20in%20the%20System%20Administration%20Course." target="_blank" class="btn enroll-btn"><i class="fas fa-user-plus"></i> Enroll Now</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Our Work -->
+  <section id="work">
+    <h2 class="section-title">Our Work & Diverse Portfolio</h2>
+    <p class="section-subtitle">Click any project to inspect real System UI Mockup Showcases & Verified Reviews</p>
+    
+    <div class="grid" id="projectsGrid"></div>
+  </section>
+
+  <!-- Modal View Structure -->
+  <div id="projectModal" class="modal-overlay" onclick="closeModalOnOuter(event)">
+    <div class="modal-content">
+      <span class="modal-close" onclick="closeModal()">&times;</span>
+      <div class="modal-header">
+        <span class="project-tag" id="mTag">Project Category</span>
+        <h2 id="mTitle">Project Title</h2>
+        <p style="color:var(--text-muted); margin-top:0.5rem;" id="mDesc">Project Description</p>
+      </div>
+
+      <div class="demo-screen-box">
+        <div class="demo-bar">
+          <span class="demo-dot" style="background:#ef4444;"></span>
+          <span class="demo-dot" style="background:#f59e0b;"></span>
+          <span class="demo-dot" style="background:#10b981;"></span>
+          <span style="margin-left: 1rem;" id="mUrl">https://demo.haroondigitalhub.com</span>
+        </div>
+        <img id="mImg" src="" alt="System Mockup UI Showcase">
+      </div>
+
+      <div class="modal-rating-box">
+        <div style="font-size:2rem; font-weight:bold; color:var(--accent);" id="mScore">5.0</div>
+        <div>
+          <div style="color:var(--star-color);"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+          <div style="font-size:0.85rem; color:var(--text-muted);" id="mReviewsCount">Verified Reviews • Client Contract</div>
+        </div>
+      </div>
+
+      <h3 style="margin: 1.5rem 0 1rem;">Verified Client Reviews & Ratings</h3>
+      <div class="client-reviews-container" id="mReviewsContainer"></div>
+    </div>
+  </div>
+
+  <!-- Contact Section -->
+  <section id="contact">
+    <h2 class="section-title">Contact Haroon Digital Hub</h2>
+    <p class="section-subtitle">Get in Touch for Projects & Consultations</p>
+    <div class="contact-card">
+      <div class="contact-grid">
+        <div class="contact-item">
+          <i class="fas fa-phone"></i>
+          <div>
+            <strong style="display:block;">Phone Call:</strong>
+            <span>+93783885025</span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <i class="fas fa-envelope"></i>
+          <div>
+            <strong style="display:block;">Email Address:</strong>
+            <span>haroonfaizy77@gmail.com</span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <i class="fab fa-whatsapp" style="color:var(--accent);"></i>
+          <div>
+            <strong style="display:block;">WhatsApp Chat:</strong>
+            <a href="https://wa.me/93783885025" target="_blank">Message (+93783885025)</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <i class="fab fa-telegram"></i>
+          <div>
+            <strong style="display:block;">Telegram Channel:</strong>
+            <a href="https://t.me/+c8pbNSimCdBlNDU1" target="_blank">Join Channel</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2026 Haroon Digital Hub (Est. 2022). All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    const projects = [
+      {
+        id: 1,
+        tag: "Crypto & Trading",
+        title: "CryptoPulse Crypto Trading App UI",
+        desc: "Real-time cryptocurrency trading, wallet balance, and market trend monitoring mobile application.",
+        img: "CryptoPulse - Crypto Trading App UI.jpg",
+        rating: "5.0",
+        reviewsCount: "30 Verified Reviews",
+        reviews: [
+          { client: "Maryland Winkles", country: "🇦🇺 Australia", initials: "MW", rating: "5.0", comment: "Fast transaction updates and crisp market charts. Perfect crypto wallet interface!" }
+        ]
+      },
+      {
+        id: 2,
+        tag: "Investment & Stocks",
+        title: "Investing & Stock Trading App UI",
+        desc: "Stock investment quiz, portfolio balance tracking, and interactive candlestick chart trading app.",
+        img: "Device Mockups _ Over 15K+ Detailed PSDs to Buy & Download.jpg",
+        rating: "5.0",
+        reviewsCount: "28 Verified Reviews",
+        reviews: [
+          { client: "Sarah Doe", country: "🇺🇸 United States", initials: "SD", rating: "5.0", comment: "Smart portfolio management and stock analytics look exceptionally professional." }
+        ]
+      },
+      {
+        id: 3,
+        tag: "Fintech & Digital Wallet",
+        title: "Digital Wallet & Expense Analytics App",
+        desc: "Green-themed digital wallet, spending analytics, and transaction history mobile application.",
+        img: "download.jpg",
+        rating: "4.9",
+        reviewsCount: "19 Verified Reviews",
+        reviews: [
+          { client: "Jarvis David", country: "🇫🇷 France", initials: "JD", rating: "4.9", comment: "The expense breakdown charts and budget alerts are extremely helpful." }
+        ]
+      },
+      {
+        id: 4,
+        tag: "Marketing & CRM",
+        title: "Email Marketing Dashboard Design",
+        desc: "Campaign list page UI for email marketing, tracking audience reach, click rates, and revenue ROI.",
+        img: "Email Marketing Dashboard Design - Campaign list page UIUX by FocoTik UI UX for FocoTik on Dribbble.jpg",
+        rating: "5.0",
+        reviewsCount: "16 Verified Reviews",
+        reviews: [
+          { client: "FocoTik Team", country: "🇩🇪 Germany", initials: "FT", rating: "5.0", comment: "Clean data tables and robust campaign tracking metrics." }
+        ]
+      },
+      {
+        id: 5,
+        tag: "Real Estate Property",
+        title: "Estate Flow Smart Property Discovery App",
+        desc: "Luxury real estate property search, architectural dossier, and smart property discovery mobile showcase.",
+        img: "Estate Flow Smart Property Discovery App.jpg",
+        rating: "5.0",
+        reviewsCount: "22 Verified Reviews",
+        reviews: [
+          { client: "Sarah Williams", country: "🇺🇸 United States", initials: "SW", rating: "5.0", comment: "Exquisite property photo galleries and map integration. Outstanding layout!" }
+        ]
+      },
+      {
+        id: 6,
+        tag: "Fintech Portfolio",
+        title: "Fintech Investment Portfolio Mobile App",
+        desc: "Advanced fintech portfolio management and asset allocation tracking interface.",
+        img: "Fintech Investment Portfolio Mobile App.jpg",
+        rating: "5.0",
+        reviewsCount: "25 Verified Reviews",
+        reviews: [
+          { client: "Adam Grant", country: "🇺🇸 United States", initials: "AG", rating: "5.0", comment: "Smooth navigation and exceptional visual hierarchy for investments." }
+        ]
+      },
+      {
+        id: 7,
+        tag: "Digital Wallet Kit",
+        title: "Modern Wallet & Card Management App",
+        desc: "Comprehensive digital wallet with card issuance, quick send, and automated money management.",
+        img: "Give Everyday Money a Modern Home with Free Wallet App UI Kits.jpg",
+        rating: "4.9",
+        reviewsCount: "21 Verified Reviews",
+        reviews: [
+          { client: "Jarvis David", country: "🇫🇷 France", initials: "JD", rating: "4.9", comment: "Great dark and green accent theme for daily transactions." }
+        ]
+      },
+      {
+        id: 8,
+        tag: "E-Commerce UX Redesign",
+        title: "Amazon App Checkout Flow UX Case Study",
+        desc: "Redesigned streamlined checkout, shipping, payment, and order confirmation flow.",
+        img: "amazon.jpg",
+        rating: "5.0",
+        reviewsCount: "34 Verified Reviews",
+        reviews: [
+          { client: "John Doe", country: "🇺🇸 United States", initials: "JD", rating: "5.0", comment: "The multi-step checkout process reduces friction significantly!" }
+        ]
+      },
+      {
+        id: 9,
+        tag: "Inventory & Marketplace",
+        title: "Inventory Management Software Design",
+        desc: "Enterprise inventory tracking, multi-warehouse management, and marketplace listing dashboard.",
+        img: "Inventory Management Software Design _ Case Study.jpg",
+        rating: "4.9",
+        reviewsCount: "18 Verified Reviews",
+        reviews: [
+          { client: "Warehouse Lead", country: "🇨🇦 Canada", initials: "WL", rating: "4.9", comment: "Clear SKU tracking and stock modifications." }
+        ]
+      },
+      {
+        id: 10,
+        tag: "Law Consultancy",
+        title: "Law Consultancy Firm Mobile View",
+        desc: "Professional legal consultation app with attorney profiles, success metrics, and appointment booking.",
+        img: "Law Consultancy Firm Mobile View.jpg",
+        rating: "5.0",
+        reviewsCount: "15 Verified Reviews",
+        reviews: [
+          { client: "Susan Alexandra", country: "🇬🇧 United Kingdom", initials: "SA", rating: "5.0", comment: "Very professional presentation of legal credentials and success cases." }
+        ]
+      },
+      {
+        id: 11,
+        tag: "Digital Education",
+        title: "Learxpo Digital Education App",
+        desc: "Online learning management system with live classes, course categories, and student tracking.",
+        img: "Learxpo_ Digital Education App - Naimu jjaman.jpg",
+        rating: "4.8",
+        reviewsCount: "27 Verified Reviews",
+        reviews: [
+          { client: "Alfie Mason", country: "🇦🇺 Australia", initials: "AM", rating: "4.8", comment: "Engaging UI for online courses and lecture management." }
+        ]
+      },
+      {
+        id: 12,
+        tag: "Logistics & Delivery",
+        title: "Mobile Delivery & Package Tracking App",
+        desc: "End-to-end package delivery, live courier tracking, shipping calculator, and order history.",
+        img: "Mobile Delivery App UI_UX Design – Package Tracking & Shipping App.jpg",
+        rating: "5.0",
+        reviewsCount: "31 Verified Reviews",
+        reviews: [
+          { client: "James Carter", country: "🇺🇸 United States", initials: "JC", rating: "5.0", comment: "Real-time delivery tracking map works flawlessly." }
+        ]
+      },
+      {
+        id: 13,
+        tag: "E-Commerce Fashion",
+        title: "Modern E-commerce Mobile App Design",
+        desc: "Fashion and apparel store mobile app with product customization, cart, and secure checkout.",
+        img: "Modern E-commerce Mobile App UI UX Design – Green Palette Mockup.jpg",
+        rating: "4.9",
+        reviewsCount: "20 Verified Reviews",
+        reviews: [
+          { client: "Tavorian", country: "🇩🇪 Germany", initials: "TV", rating: "4.9", comment: "Gorgeous green palette and smooth cart management." }
+        ]
+      },
+      {
+        id: 14,
+        tag: "Team Collaboration",
+        title: "Task Management & Community App",
+        desc: "Office community communication, team task assignment, and real-time messaging interface.",
+        img: "Task Management App.jpg",
+        rating: "4.9",
+        reviewsCount: "24 Verified Reviews",
+        reviews: [
+          { client: "Andreas", country: "🇸🇪 Sweden", initials: "AN", rating: "4.9", comment: "Great team collaboration structure and chat features." }
+        ]
+      },
+      {
+        id: 15,
+        tag: "Productivity",
+        title: "Task Manager & Progress Tracker App",
+        desc: "Daily task creation, completion percentage tracking, calendar scheduling, and project hours log.",
+        img: "Task Manager App.jpg",
+        rating: "5.0",
+        reviewsCount: "26 Verified Reviews",
+        reviews: [
+          { client: "Project Lead", country: "🇺🇸 United States", initials: "PL", rating: "5.0", comment: "The progress circle and scheduling tools boost daily productivity." }
+        ]
+      }
+    ];
+
+    const grid = document.getElementById('projectsGrid');
+    projects.forEach(p => {
+      grid.innerHTML += `
+        <div class="card project-card-interactive" onclick="openModal(${p.id})">
+          <img src="${p.img}" class="project-thumb-preview" alt="${p.title}" onerror="this.onerror=null; this.src='https://via.placeholder.com/600x400/111827/94a3b8?text=Place+Image+in+Folder';">
+          <div>
+            <span class="project-tag">${p.tag}</span>
+            <h3>${p.title}</h3>
+            <p style="color:var(--text-muted); font-size:0.9rem;">${p.desc}</p>
+          </div>
+          <div class="project-meta">
+            <span><i class="fas fa-star" style="color:var(--star-color);"></i> ${p.rating} (${p.reviewsCount})</span>
+            <span class="view-btn"><i class="fas fa-eye"></i> Inspect Project</span>
+          </div>
+        </div>
+      `;
+    });
+
+    function openModal(id) {
+      const p = projects.find(item => item.id === id);
+      if(!p) return;
+
+      document.getElementById('mTag').innerText = p.tag;
+      document.getElementById('mTitle').innerText = p.title;
+      document.getElementById('mDesc').innerText = p.desc;
+      document.getElementById('mImg').src = p.img;
+      document.getElementById('mUrl').innerText = 'https://demo.haroondigitalhub.com/' + p.title.toLowerCase().replace(/[^a-z0-9]/g, '-');
+      document.getElementById('mScore').innerText = p.rating;
+      document.getElementById('mReviewsCount').innerText = p.reviewsCount + ' • Active Contract';
+      
+      const reviewsContainer = document.getElementById('mReviewsContainer');
+      reviewsContainer.innerHTML = '';
+      
+      p.reviews.forEach(r => {
+        reviewsContainer.innerHTML += `
+          <div class="client-review-item">
+            <div class="client-profile">
+              <div class="avatar-circle">${r.initials}</div>
+              <div>
+                <strong>${r.client}</strong> <span style="font-size:0.8rem; color:var(--text-muted);">${r.country} • ${r.rating}</span>
+                <div style="color:var(--star-color); font-size:0.8rem;"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+              </div>
+            </div>
+            <p style="color:var(--text-muted); font-size:0.9rem;">"${r.comment}"</p>
+          </div>
+        `;
+      });
+
+      document.getElementById('projectModal').style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      document.getElementById('projectModal').style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+
+    function closeModalOnOuter(event) {
+      if (event.target.classList.contains('modal-overlay')) {
+        closeModal();
+      }
+    }
+  </script>
+
+</body>
+</html>
